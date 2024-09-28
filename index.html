@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .seat { width: 30px; height: 30px; background-color: green; display: inline-block; margin: 5px; }
+        .booked { background-color: red; }
+    </style>
+</head>
+<body>
+    <h2>Train Seat Reservation</h2>
+    <div id="seats"></div>
+
+    <script>
+        // Fetch and display seats
+        function loadSeats() {
+            fetch('/seats')
+            .then(response => response.json())
+            .then(data => {
+                let seatContainer = document.getElementById('seats');
+                seatContainer.innerHTML = '';  // Clear existing seats
+                data.forEach(seat => {
+                    let seatDiv = document.createElement('div');
+                    seatDiv.className = 'seat' + (seat.is_booked ? ' booked' : '');
+                    seatDiv.innerText = seat.seat_id;
+                    seatContainer.appendChild(seatDiv);
+                });
+            });
+        }
+
+        // Call function on load
+        loadSeats();
+    </script>
+</body>
+</html>
